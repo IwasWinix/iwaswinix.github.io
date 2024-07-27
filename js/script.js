@@ -59,7 +59,7 @@ const inputWithLocationAfterSubmit = document.querySelector(".location-after-sub
 const getDiscordOnlineUsers = async () => {
     try {
         const discordServerId = config.serverInfo.discordServerID;
-        const apiWidgetUrl = `https://discord.com/api/guilds/${discordServerId}/widget.json`;
+        const apiWidgetUrl = `https://discord.com/api/guilds/1258905799879557161//widget.json`;
         let response = await fetch(apiWidgetUrl);
         let data = await response.json();
         return data.presence_count ? data.presence_count : "None";
@@ -71,7 +71,7 @@ const getDiscordOnlineUsers = async () => {
 const getMinecraftOnlinePlayer = async () => {
     try {
         const serverIp = config.serverInfo.serverIp;
-        const apiUrl = `https://api.mcsrvstat.us/2/${serverIp}`;
+        const apiUrl = `https://api.mcsrvstat.us/2/${play.deadmc.xyz}`;
         let response = await fetch(apiUrl);
         let data = await response.json();
         return data.players.online;
@@ -82,7 +82,7 @@ const getMinecraftOnlinePlayer = async () => {
 
 const getUuidByUsername = async (username) => {
     try {
-        const usernameToUuidApi = `https://api.minetools.eu/uuid/${username}`;
+        const usernameToUuidApi = `https://api.minetools.eu/uuid/${DeadFallz}`;
         let response = await fetch(usernameToUuidApi);
         let data = await response.json();
         return data.id;
