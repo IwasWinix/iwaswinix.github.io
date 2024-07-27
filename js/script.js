@@ -1,8 +1,6 @@
 /*
 Configuration
 ------------------------
-If something doesn't work please contact me on discord (Astronawta#0012).
-*/
 
 const config = {
     serverInfo: {
@@ -12,12 +10,11 @@ const config = {
         discordServerID: "1258905799879557161" /* Discord server ID */
     },
 
-
-
     /* Contact form */
     contactPage: {
         email: "support@deadmc.xyz"
-    }
+    },
+
 };
 
 /* Mobile navbar (open, close) */
@@ -38,8 +35,10 @@ accordionItemHeaders.forEach(accordionItemHeader => {
         accordionItemHeader.classList.toggle("active");
         const accordionItemBody = accordionItemHeader.nextElementSibling;
 
-        if (accordionItemHeader.classList.contains("active")) accordionItemBody.style.maxHeight = accordionItemBody.scrollHeight + "px";
-        else accordionItemBody.style.maxHeight = "0px";
+        if (accordionItemHeader.classList.contains("active")) 
+            accordionItemBody.style.maxHeight = accordionItemBody.scrollHeight + "px";
+        else 
+            accordionItemBody.style.maxHeight = "0px";
     });
 });
 
@@ -59,11 +58,13 @@ const inputWithLocationAfterSubmit = document.querySelector(".location-after-sub
 const getDiscordOnlineUsers = async () => {
     try {
         const discordServerId = config.serverInfo.discordServerID;
-        const apiWidgetUrl = `https://discord.com/api/guilds/1258905799879557161//widget.json`;
+        const apiWidgetUrl = `https://discord.com/api/guilds/${discordServerId}/widget.json`;
         let response = await fetch(apiWidgetUrl);
         let data = await response.json();
+        console.log("Discord data:", data); // Debugging line
         return data.presence_count ? data.presence_count : "None";
     } catch (e) {
+        console.error("Error fetching Discord data:", e); // Debugging line
         return "None";
     }
 };
@@ -71,33 +72,41 @@ const getDiscordOnlineUsers = async () => {
 const getMinecraftOnlinePlayer = async () => {
     try {
         const serverIp = config.serverInfo.serverIp;
-        const apiUrl = `https://api.mcsrvstat.us/2/${play.deadmc.xyz}`;
+        const apiUrl = `https://api.mcsrvstat.us/2/${serverIp}`;
         let response = await fetch(apiUrl);
         let data = await response.json();
-        return data.players.online;
+        console.log("Minecraft data:", data); // Debugging line
+        return data.players ? data.players.online : "None";
     } catch (e) {
+        console.error("Error fetching Minecraft data:", e); // Debugging line
         return "None";
     }
 };
 
 const getUuidByUsername = async (username) => {
     try {
-        const usernameToUuidApi = `https://api.minetools.eu/uuid/${DeadFallz}`;
+        const usernameToUuidApi = `https://api.minetools.eu/uuid/${username}`;
         let response = await fetch(usernameToUuidApi);
         let data = await response.json();
+        console.log("UUID data:", data); // Debugging line
         return data.id;
     } catch (e) {
+        console.error("Error fetching UUID:", e); // Debugging line
         return "None";
     }
 };
 
 const getSkinByUuid = async (username) => {
     try {
-        const skinByUuidApi = `https://visage.surgeplay.com/${config.userSkinTypeInAdminTeam}/512/${await getUuidByUsername(username)}`;
+        const uuid = await getUuidByUsername(username);
+        const skinByUuidApi = `https://visage.surgeplay.com/512/${uuid}`;
         let response = await fetch(skinByUuidApi);
-        if (response.status === 400) return `https://visage.surgeplay.com/${config.userSkinTypeInAdminTeam}/512/ec561538f3fd461daff5086b22154bce`;
-        else return skinByUuidApi;
+        if (response.status === 400) 
+            return `https://visage.surgeplay.com/512/ec561538f3fd461daff5086b22154bce`;
+        else 
+            return skinByUuidApi;
     } catch (e) {
+        console.error("Error fetching skin:", e); // Debugging line
         return "None";
     }
 };
@@ -107,21 +116,25 @@ const copyIp = () => {
     const copyIpButton = document.querySelector(".copy-ip");
     const copyIpAlert = document.querySelector(".ip-copied");
 
-    copyIpButton.addEventListener("click", () => {
-        try {
-            navigator.clipboard.writeText(config.serverInfo.serverIp);
-            copyIpAlert.classList.add("active");
-            setTimeout(() => {
-                copyIpAlert.classList.remove("active");
-            }, 5000);
-        } catch (e) {
-            copyIpAlert.innerHTML = "An error has occurred!";
-            copyIpAlert.classList.add("active", "error");
-            setTimeout(() => {
-                copyIpAlert.classList.remove("active", "error");
-            }, 5000);
-        }
-    });
+    if (copyIpButton && copyIpAlert) {
+        copyIpButton.addEventListener("click", () => {
+            try {
+                navigator.clipboard.writeText(config.serverInfo.serverIp);
+                copyIpAlert.classList.add("active");
+                setTimeout(() => {
+                    copyIpAlert.classList.remove("active");
+                }, 5000);
+            } catch (e) {
+                copyIpAlert.innerHTML = "An error has occurred!";
+                copyIpAlert.classList.add("active", "error");
+                setTimeout(() => {
+                    copyIpAlert.classList.remove("active", "error");
+                }, 5000);
+            }
+        });
+    } else {
+        console.error("Copy IP button or alert not found."); // Debugging line
+    }
 };
 
 /* Set data from config to HTML */
@@ -142,45 +155,12 @@ const setDataFromConfigToHtml = async () => {
         minecraftOnlinePlayers.innerHTML = await getMinecraftOnlinePlayer();
     } else if (locationPathname.includes("rules")) {
         copyIp();
-    } else if (locationPathname.includes("admin-team")) {
-        for (let team in config.adminTeamPage) {
-            const atContent = document.querySelector(".at-content");
-            
-            const group = document.createElement("div");
-            group.classList.add("group");
-            group.classList.add(team);
-
-            const groupSchema = `
-                <h2 class="rank-title">${team.charAt(0).toUpperCase() + team.slice(1)}</h2>
-                <div class="users"></div>
-            `;
-
-            group.innerHTML = groupSchema;
-            atContent.appendChild(group);
-
-            for (let j = 0; j < config.adminTeamPage[team].length; j++) {
-                let user = config.adminTeamPage[team][j];
-                const groupElem = document.querySelector("." + team + " .users");
-
-                const userDiv = document.createElement("div");
-                userDiv.classList.add("user");
-
-                let userSkin = user.skinUrlOrPathToFile || await getSkinByUuid(user.inGameName);
-                let rankColor = user.rankColor || config.atGroupsDefaultColors[team];
-
-                const userDivSchema = `
-                    <img src="${userSkin}" alt="${user.inGameName}">
-                    <h5 class="name">${user.inGameName}</h5>
-                    <p class="rank ${team}" style="background: ${rankColor}">${user.rank}</p>  
-                `;
-
-                userDiv.innerHTML = userDivSchema;
-                groupElem.appendChild(userDiv);
-            }
-        }
     } else if (locationPathname.includes("contact")) {
         contactForm.action = `https://formsubmit.co/${config.contactPage.email}`;
         discordOnlineUsers.innerHTML = await getDiscordOnlineUsers();
         inputWithLocationAfterSubmit.value = location.href;
     }
 };
+
+// Call the function to set data when the script loads
+setDataFromConfigToHtml();
