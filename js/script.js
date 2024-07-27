@@ -9,7 +9,7 @@ const config = {
         serverLogoImageFileName: "logo.png", /*This is a file name for logo in /images/ (If you upload new logo with other name, you must change this value)*/
         serverName: "DeadMC", /*Server name*/
         serverIp: "play.deadmc.xyz", /*Server IP (if you want to add online user counter, you must have true the enable-status and enable-query of server.properties)*/
-        discordServerID: "489529070913060867" /*Your server ID (if you want to add online user counter, you must have enabled Discord server widget)*/
+        discordServerID: "1258905799879557161" /*Your server ID (if you want to add online user counter, you must have enabled Discord server widget)*/
     },
 
     /*Admin-Team
@@ -46,25 +46,25 @@ const config = {
     adminTeamPage: {
         leaders: [
             {
-                inGameName: "RaviRai",
+                inGameName: "DeadFallz",
                 rank: "Owner",
                 skinUrlOrPathToFile: "",
                 rankColor: "rgba(255, 3, 3, 1)"
             },
             {
-                inGameName: "RaviRai",
+                inGameName: "ZachDavis",
                 rank: "Owner",
                 skinUrlOrPathToFile: "",
                 rankColor: "rgba(255, 3, 3, 1)"
             },
             {
-                inGameName: "RaviRai",
+                inGameName: "None",
                 rank: "Manager",
                 skinUrlOrPathToFile: "",
                 rankColor: ""
             },
             {
-                inGameName: "RaviRai",
+                inGameName: "None",
                 rank: "Moderator",
                 skinUrlOrPathToFile: "",
                 rankColor: ""
@@ -72,104 +72,40 @@ const config = {
         ],
         developers: [
             {
-                inGameName: "RaviRai",
+                inGameName: "None",
                 rank: "Developer",
                 skinUrlOrPathToFile: "",
                 rankColor: ""
             },
             {
-                inGameName: "RaviRai",
+                inGameName: "None",
                 rank: "Developer",
                 skinUrlOrPathToFile: "",
                 rankColor: ""
             },
             {
-                inGameName: "RaviRai",
-                rank: "Webmaster",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            },
-            {
-                inGameName: "RaviRai",
+                inGameName: "None",
                 rank: "Discord manager",
                 skinUrlOrPathToFile: "",
                 rankColor: ""
             }
         ],
-        helpers: [
-            {
-                inGameName: "RaviRai",
-                rank: "Helper++",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            },
-            {
-                inGameName: "RaviRai",
-                rank: "Helper++",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            },
-            {
-                inGameName: "RaviRai",
-                rank: "Helper+",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            },
-            {
-                inGameName: "RaviRai",
-                rank: "Helper+",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            },
-            {
-                inGameName: "RaviRai",
-                rank: "Helper",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            },
-            {
-                inGameName: "RaviRai",
-                rank: "Helper",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            }
+        
+            
         ],
         builders: [
             {
-                inGameName: "RaviRai",
-                rank: "Builder++",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            },
-            {
-                inGameName: "RaviRai",
-                rank: "Builder++",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            },
-            {
-                inGameName: "RaviRai",
-                rank: "Builder+",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            },
-            {
-                inGameName: "RaviRai",
-                rank: "Builder+",
-                skinUrlOrPathToFile: "",
-                rankColor: ""
-            },
-            {
-                inGameName: "RaviRai",
+                inGameName: "None",
                 rank: "Builder",
                 skinUrlOrPathToFile: "",
                 rankColor: ""
             },
             {
-                inGameName: "RaviRai",
-                rank: "Builder",
+                inGameName: "None",
+                rank: "Builder+",
                 skinUrlOrPathToFile: "",
                 rankColor: ""
+            },
             }
         ]
     },
@@ -181,7 +117,7 @@ const config = {
     Emails are sent via https://formsubmit.co/
     */
     contactPage: {
-        email: "RaviRai@example.com"
+        email: "support@deadmc.xyz"
     }
 }
 
