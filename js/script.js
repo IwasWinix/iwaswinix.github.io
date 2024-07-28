@@ -158,10 +158,22 @@ const setDataFromConfigToHtml = async () => {
         minecraftOnlinePlayers.innerHTML = await getMinecraftOnlinePlayer();
     } else if (locationPathname.includes("rules")) {
         copyIp();
-    } else if (locationPathname.includes("contact")) {
-        contactForm.action = `https://formsubmit.co/${config.contactPage.email}`;
-        discordOnlineUsers.innerHTML = await getDiscordOnlineUsers();
-        inputWithLocationAfterSubmit.value = location.href;
+    } const setDataFromConfigToHtml = async () => {
+    let locationPathname = location.pathname;
+
+    if (locationPathname.includes("contact")) {
+        if (contactForm && inputWithLocationAfterSubmit) {
+            contactForm.action = `https://formsubmit.co/${config.contactPage.email}`;
+            discordOnlineUsers.innerHTML = await getDiscordOnlineUsers();
+            inputWithLocationAfterSubmit.value = location.href;
+        } else {
+            console.error("Contact form or input field not found.");
+        }
+    }
+};
+
+// Call the function to set data when the script loads
+setDataFromConfigToHtml();
     }
 };
 
