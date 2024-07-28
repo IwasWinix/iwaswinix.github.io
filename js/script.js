@@ -1,6 +1,7 @@
 /*
 Configuration
 ------------------------
+*/
 
 const config = {
     serverInfo: {
@@ -13,8 +14,7 @@ const config = {
     /* Contact form */
     contactPage: {
         email: "support@deadmc.xyz"
-    },
-
+    }
 };
 
 /* Mobile navbar (open, close) */
@@ -118,22 +118,25 @@ const copyIp = () => {
 
     if (copyIpButton && copyIpAlert) {
         copyIpButton.addEventListener("click", () => {
-            try {
-                navigator.clipboard.writeText(config.serverInfo.serverIp);
-                copyIpAlert.classList.add("active");
-                setTimeout(() => {
-                    copyIpAlert.classList.remove("active");
-                }, 5000);
-            } catch (e) {
-                copyIpAlert.innerHTML = "An error has occurred!";
-                copyIpAlert.classList.add("active", "error");
-                setTimeout(() => {
-                    copyIpAlert.classList.remove("active", "error");
-                }, 5000);
-            }
+            navigator.clipboard.writeText(config.serverInfo.serverIp)
+                .then(() => {
+                    copyIpAlert.innerHTML = "IP was successfully copied!";
+                    copyIpAlert.classList.add("active");
+                    setTimeout(() => {
+                        copyIpAlert.classList.remove("active");
+                    }, 5000);
+                })
+                .catch(err => {
+                    console.error("Clipboard write failed:", err);
+                    copyIpAlert.innerHTML = "Failed to copy IP!";
+                    copyIpAlert.classList.add("active", "error");
+                    setTimeout(() => {
+                        copyIpAlert.classList.remove("active", "error");
+                    }, 5000);
+                });
         });
     } else {
-        console.error("Copy IP button or alert not found."); // Debugging line
+        console.error("Copy IP button or alert not found.");
     }
 };
 
@@ -148,7 +151,7 @@ const setDataFromConfigToHtml = async () => {
 
     let locationPathname = location.pathname;
 
-    if (locationPathname == "/" || locationPathname.includes("index")) {
+    if (locationPathname === "/" || locationPathname.includes("index")) {
         copyIp();
         serverLogoHeader.src = `images/` + config.serverInfo.serverLogoImageFileName;
         discordOnlineUsers.innerHTML = await getDiscordOnlineUsers();
