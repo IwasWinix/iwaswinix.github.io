@@ -12,10 +12,47 @@ const config = {
     },
 
     /* Contact form */
-    contactPage: {
-        email: "support@deadmc.xyz"
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  // Collect form data
+  const name = document.getElementById('name').value;
+  const discordName = document.getElementById('discord-name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+
+  // Create the data object to send to the server
+  const data = {
+    name: name,
+    discordName: discordName,
+    email: email,
+    message: message,
+    to: 'support@deadmc.xyz' // This is the recipient email
+  };
+
+  // Send the data to the server using fetch
+  fetch('https://your-server-endpoint/send-email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => {
+    if (response.ok) {
+      console.log('Email successfully sent');
+      alert('Your email has been submitted');
+      document.getElementById('contactForm').reset(); // Optionally reset the form
+    } else {
+      console.error('Error submitting email');
+      alert('There was an error submitting your email');
     }
-};
+  })
+  .catch(error => {
+    console.error('Error submitting email', error);
+    alert('There was an error submitting your email');
+  });
+});
 
 /* Mobile navbar (open, close) */
 const navbar = document.querySelector(".navbar");
